@@ -3,8 +3,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.shop.fruit.user.UserMapper">
-<select id="testSelect">
--- SQL 문~
-</select>
+<mapper namespace="com.shop.fruitfruit.user.UserMapper">
+    <select id="testSelect" resultType="hashmap">
+    SELECT *FROM user
+    </select>
+
+    <select id="axiosSelect" resultType="Hashmap">
+     SELECT *FROM user
+    </select>
+
+    <select id="emailChk" parameterType="java.util.Map">
+        select * from user where email=#{email}
+    </select>
+
+    <select id="nicknameChk" parameterType="java.util.Map">
+        select * from user where nickname=#{nickname}
+    </select>
+
+    <insert id="insertUser" parameterType="java.util.Map">
+            INSERT INTO user (email, nickname, password)
+            VALUES(#{email},#{nickname},#{encodedPassword})
+    </insert>
+
+    <insert id="insertUserTerm" parameterType="java.util.Map">
+        INSERT INTO user_term (user_email, term_id)
+        VALUES
+        <foreach collection="status" item="termId" separator=",">
+            (#{email}, #{termId})
+        </foreach>
+    </insert>
+
 </mapper>
