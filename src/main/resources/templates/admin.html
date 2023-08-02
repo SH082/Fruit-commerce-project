@@ -75,7 +75,7 @@
 
                 <li class="item">
                     <div class="item__name">
-                        <a href="admin/banner.html">
+                        <a href="admin/banner">
                             <span class="material-symbols-outlined">photo_library</span>
                             배너관리</a>
                     </div>
@@ -117,7 +117,7 @@
         </div>
     </header>
 
-
+    <form action="/adminSign", method="post">
     <section id="admin">
         <div class="inner">
             <div class="login">
@@ -126,16 +126,21 @@
                 </div>
 
                 <div class="login__input">
-                    <label for="id">
-                        <p>이메일주소(ID)</p>
-                        <input type="textbox" name="id" placeholder="이메일 주소 입력" id="id">
-                    </label>
+                    <div class="input__id">
+                        <label for="id">
+                            <p>이메일주소(ID)</p>
+                            <input type="textbox" name="email" placeholder="이메일 주소 입력" id="id">
+                            <p class="wrong__id" th:text="${fail2Message}"></p>
+                        </label>
+                    </div>
 
                     <div class="input__pw">
                         <label for="pw">
                             <p>비밀번호</p>
-                            <input type="textbox" name="pw" placeholder="영문, 숫자, 특수문자 (8자-20자 이내)" id="pw">
+                            <input type="password" name="password" placeholder="영문, 숫자, 특수문자 (8자-20자 이내)" id="pw">
+                            <p class="wrong__pw" th:text="${failMessage}"></p>
                         </label>
+
                     </div>
 
                 </div>
@@ -160,8 +165,9 @@
                     </div>
                 </div>
             </div>
+        </div>
     </section>
-
+    </form>
 
 </body>
 

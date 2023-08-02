@@ -80,7 +80,7 @@ public class UserController {
                 response.addCookie(emailCookie);
             }
 
-            return "index"; // 로그인 성공 시 이동할 뷰 페이지
+            return "redirect:/"; // 로그인 성공 시 이동할 뷰 페이지
         } else if (loginResult.equals("fail")) {
             model.addAttribute("failMessage", "이메일과 비밀번호가 일치하지 않습니다.");
             return "user/login";
@@ -111,6 +111,43 @@ public class UserController {
         else return null;
     }
 
+    @PostMapping("adminSign")
+    public String adminSign(@RequestParam HashMap<String, Object> requestData,HttpServletResponse response, HttpSession session, Model model)  {
+
+        HashMap<String, Object> result = userService.loginChk(requestData);
+
+        String loginResult = (String) result.get("result");
+
+//        System.out.println(result);
+
+        if (loginResult.equals("success")) {
+            model.addAttribute("email", requestData.get("email"));
+
+            // 로그인 유지 체크 여부 확인
+            if (requestData.containsKey("login_keep")) {
+                // 쿠키에 이메일 저장 (유효 기간은 7일로 설정)
+                Cookie emailCookie = new Cookie("email", (String) requestData.get("email"));
+                emailCookie.setMaxAge(7 * 24 * 60 * 60); // 7일 (초 단위)
+                response.addCookie(emailCookie);
+            } else {
+                // 로그인 유지를 체크하지 않았을 경우, 세션에 이메일 저장 쿠키 삭제
+                session.setAttribute("email", (String) requestData.get("email"));
+                Cookie emailCookie = new Cookie("email", null);
+                emailCookie.setMaxAge(0);
+                response.addCookie(emailCookie);
+            }
+
+            return "redirect:admin/dashboard"; // 로그인 성공 시 이동할 뷰 페이지
+        } else if (loginResult.equals("fail")) {
+            model.addAttribute("failMessage", "이메일과 비밀번호가 일치하지 않습니다.");
+            return "admin";
+        } else if (loginResult.equals("fail2")) {
+            model.addAttribute("fail2Message", "이메일이 존재하지 않습니다.");
+            return "admin";
+        }
+
+        return loginResult;
+    }
 
     @GetMapping("{pageName}")
     public String goSubPage(@PathVariable String pageName){
