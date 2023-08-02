@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프룻프룻 쇼핑몰</title>
+
+    <!--Open Graph-->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="프룻프룻 Shopping Mall" />
+    <meta property="og:title" content="프룻프룻 Shopping Mall" />
+    <meta property="og:description" content="프룻프룻 Shopping Mall 입니다." />
+    <meta property="og:image" content="./img/openGraph.png" />
+    <meta property="og:url" content="https://prpr-shopping-mall.co.kr" />
+
+    <!--파비콘-->
+    <link rel="icon" href="./favicon.ico" />
+
+    <!--브라우저 스타일 초기화-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
+
+    <!--Google Fonts - 나눔고딕-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+
+    <!-- Google Fonts - Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+
+    <!--Google Material Icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <link rel="stylesheet" href="./css/style.css">
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
+        integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"
+        integrity="sha512-cOH8ndwGgPo+K7pTvMrqYbmI8u8k6Sho3js0gOqVWTmQMlLIi6TbqGWRTpf1ga8ci9H3iPsvDLr4X7xwhC/+DQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- SWIPER -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+    <script defer src="./js/main.js"></script>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header id="admin_review_header">
+        <div class="inner">
+
+            <a href="../admin.html" class="logo">
+                <img src="./img/푸릇푸릇 로고.png" alt="logo" />
+            </a>
+
+            <ul class="main-menu">
+                <li class="item">
+                    <div class="item__name">
+                        <a href="./dashboard.html">
+                            <span class="material-symbols-outlined">dashboard</span>
+                            대쉬보드</a>
+                    </div>
+                </li>
+
+                <li class="item">
+                    <div class="item__name">
+                        <a href="./banner.html">
+                            <span class="material-symbols-outlined">photo_library</span>
+                            배너관리</a>
+                    </div>
+                </li>
+
+                <li class="item">
+                    <div class="item__name">
+                        <a href="./product.html">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                            상품관리</a>
+                    </div>
+                </li>
+
+                <li class="item">
+                    <div class="item__name">
+                        <a href="./review.html">
+                            <span class="material-symbols-outlined">rate_review</span>
+                            리뷰관리</a>
+                    </div>
+                </li>
+
+                <li class="item">
+                    <div class="item__name">
+                        <a href="./member.html">
+                            <span class="material-symbols-outlined">groups</span>
+                            회원관리</a>
+                    </div>
+                </li>
+
+                <li class="item">
+                    <div class="item__name">
+                        <a href="./notification.html">
+                            <span class="material-symbols-outlined">notifications</span>
+                            알림관리</a>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </header>
+
+
+    <section id="admin_review">
+        <div class="inner">
+            <div class="title">
+                <h2>리뷰관리</h2>
+            </div>
+
+            <div class="box01">
+                <ul>
+                    <li>
+                        전체리뷰 <span>100</span>건
+                    </li>
+                    <li>
+                        답변완료 <span>60</span>건
+                    </li>
+                    <li>
+                        미답변 <span>40</span>건
+                    </li>
+                </ul>
+            </div>
+
+            <div class="box02">
+                <div class="status">
+                    <span>답변상태</span>
+                    <div class="buttons">
+                        <button>답변완료</button>
+                        <button>미답변</button>
+                    </div>
+                </div>
+
+                <div class="sort">
+                    <span>기간검색</span>
+                    <div class="buttons">
+                        <button>당일</button>
+                        <button>1주</button>
+                        <button>1개월</button>
+                        <button>3개월</button>
+                        <button>6개월</button>
+                    </div>
+                    <input type="date" value="2023-07-01">
+                    <p>~</p>
+                    <input type="date" value="2023-07-30">
+                </div>
+
+                <div class="search">
+                    <span>검색</span>
+                    <select name="search">
+                        <option value="상품명">상품명</option>
+                        <option value="회원ID">회원ID</option>
+                        <option value="주문번호">주문번호</option>
+                        <option value="수령인명">수령인명</option>
+                    </select>
+                    <input type="text" placeholder="상품명 검색">
+                    <div class="buttons">
+                        <button>검색</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box03">
+                <div class="left">
+                    <span class="margin">검색결과 <span class="bold">5</span>건</span>
+                    <button>선택 게시중지</button>
+                    <button>선택삭제</button>
+                </div>
+
+                <div class="right">
+                    <select name="howmany">
+                        <option value="10개씩 보기">10개씩 보기</option>
+                        <option value="30개씩 보기">30개씩 보기</option>
+                        <option value="50개씩 보기">50개씩 보기</option>
+                        <option value="100개씩 보기">100개씩 보기</option>
+                    </select>
+
+                    <button>
+                        <span class="material-symbols-outlined">description</span>
+                        <span>엑셀 다운로드</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="box04">
+                <table class="product-table">
+                    <caption class="hidden">리뷰관리</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <input type="checkbox" checked>
+                            </th>
+                            <th scope="col">번호</th>
+                            <th scope="col">상태</th>
+                            <th scope="col">상품명</th>
+                            <th scope="col">리뷰내용</th>
+                            <th scope="col">작성자ID</th>
+                            <th scope="col">작성자 닉네임</th>
+                            <th scope="col">등록일</th>
+                            <th scope="col">답변등록</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="checkbox">
+                            </td>
+                            <td>05</td>
+                            <td>답변완료</td>
+                            <td>
+                                <a href="#">
+                                    프리미엄 선물용 사..
+                                </a>
+                            </td>
+                            <td>어머니 선물로 샀는데 너무 달고 맛..</td>
+                            <td>fireraccoon@naver.com</td>
+                            <td>불타는너구리</td>
+                            <td>2023. 03. 01</td>
+                            <td>
+                                <button>답변보기</button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <input type="checkbox">
+                            </td>
+                            <td>04</td>
+                            <td>답변완료</td>
+                            <td>
+                                <a href="#">
+                                    프리미엄 선물용 사..
+                                </a>
+                            </td>
+                            <td>어머니 선물로 샀는데 너무 달고 맛..</td>
+                            <td>fireraccoon@naver.com</td>
+                            <td>불타는너구리</td>
+                            <td>2023. 03. 01</td>
+                            <td>
+                                <button class="answer">답변하기</button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <input type="checkbox">
+                            </td>
+                            <td>03</td>
+                            <td>답변완료</td>
+                            <td>
+                                <a href="#">
+                                    프리미엄 선물용 사..
+                                </a>
+                            </td>
+                            <td>어머니 선물로 샀는데 너무 달고 맛..</td>
+                            <td>fireraccoon@naver.com</td>
+                            <td>불타는너구리</td>
+                            <td>2023. 03. 01</td>
+                            <td>
+                                <button>답변보기</button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <input type="checkbox">
+                            </td>
+                            <td>02</td>
+                            <td>답변완료</td>
+                            <td>
+                                <a href="#">
+                                    프리미엄 선물용 사..
+                                </a>
+                            </td>
+                            <td>어머니 선물로 샀는데 너무 달고 맛..</td>
+                            <td>fireraccoon@naver.com</td>
+                            <td>불타는너구리</td>
+                            <td>2023. 03. 01</td>
+                            <td>
+                                <button>답변보기</button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <input type="checkbox">
+                            </td>
+                            <td>01</td>
+                            <td>답변완료</td>
+                            <td>
+                                <a href="#">
+                                    프리미엄 선물용 사..
+                                </a>
+                            </td>
+                            <td>어머니 선물로 샀는데 너무 달고 맛..</td>
+                            <td>fireraccoon@naver.com</td>
+                            <td>불타는너구리</td>
+                            <td>2023. 03. 01</td>
+                            <td>
+                                <button>답변보기</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <a href="#" class="prev">
+                    <span class="material-symbols-outlined">
+                        chevron_left
+                    </span>
+                </a>
+
+                <p class="numbers">
+                    <a href="#">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">
+                        <span class="bold">4</span>
+                    </a>
+                    <a href="#">5</a>
+                </p>
+
+                <a href="#" class="next">
+                    <span class="material-symbols-outlined">
+                        chevron_right
+                    </span>
+                </a>
+            </div>
+
+            <!-- 리뷰관리 답변하기 버튼 클릭시 모달창 -->
+            <div class="admin__review" style="display: none;">
+                <div class="admin__review__inner">
+
+                    <div class="top">
+                        <span>주문번호 12345678</span>
+                    </div>
+
+                    <div class="middle">
+                        <p>프리미엄 고당도 꿀수박</p>
+                        <input type="text">
+                        <span>불타는너구리 | 2023. 07. 01 (13:10:10) 작성</span>
+                        <div class="line"></div>
+                    </div>
+
+
+                    <div class="bottom">
+                        <p>리뷰답변</p>
+                        <input type="text">
+                        <span>15 / 500</span>
+
+                        <div class="admin__review__buttons">
+                            <button>
+                                <a href="#">취소하기</a>
+                            </button>
+                            <button>
+                                <a href="#">답변하기</a>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 리뷰 작성 취소하기 버튼 클릭시 모달창 -->
+            <div class="admin__review__cancel" style="display: none;">
+                <div class="admin__review__cancel__inner">
+
+                    <div class="top">
+                        <span>알림</span>
+                    </div>
+
+                    <div class="middle">
+                        <p>작성중인 내용이 모두 삭제됩니다. <br>
+                            취소 하시겠습니까?</p>
+                    </div>
+
+
+                    <div class="bottom">
+                        <button>취소하기</button>
+                        <button>계속작성</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 리뷰 작성 완료 모달창 -->
+            <div class="admin__review__confirm" style="display: none;">
+                <div class="admin__review__confirm__inner">
+
+                    <div class="top">
+                        <span>알림</span>
+                    </div>
+
+                    <div class="middle">
+                        <p>리뷰답변이 완료 되었습니다.</p>
+                    </div>
+
+
+                    <div class="bottom">
+                        <button>확인</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+</body>
+
+</html>

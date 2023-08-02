@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프룻프룻 쇼핑몰</title>
+
+    <!--Open Graph-->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="프룻프룻 Shopping Mall" />
+    <meta property="og:title" content="프룻프룻 Shopping Mall" />
+    <meta property="og:description" content="프룻프룻 Shopping Mall 입니다." />
+    <meta property="og:image" content="./img/openGraph.png" />
+    <meta property="og:url" content="https://prpr-shopping-mall.co.kr" />
+
+    <!--파비콘-->
+    <link rel="icon" href="./favicon.ico" />
+
+    <!--브라우저 스타일 초기화-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
+
+    <!--Google Fonts - 나눔고딕-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+
+    <!-- Google Fonts - Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+
+    <!--Google Material Icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <link rel="stylesheet" href="./css/style.css">
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
+        integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"
+        integrity="sha512-cOH8ndwGgPo+K7pTvMrqYbmI8u8k6Sho3js0gOqVWTmQMlLIi6TbqGWRTpf1ga8ci9H3iPsvDLr4X7xwhC/+DQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- SWIPER -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+    <script defer src="./js/main.js"></script>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header id="admin_notification_header">
+        <div class="inner">
+
+            <a href="../admin.html" class="logo">
+                <img src="./img/푸릇푸릇 로고.png" alt="logo" />
+            </a>
+
+            <ul class="main-menu">
+                <li class="item">
+                    <div class="item__name">
+                        <a href="./dashboard.html">
+                            <span class="material-symbols-outlined">dashboard</span>
+                            대쉬보드</a>
+                    </div>
+                </li>
+
+                <li class="item">
+                    <div class="item__name">
+                        <a href="./banner.html">
+                            <span class="material-symbols-outlined">photo_library</span>
+                            배너관리</a>
+                    </div>
+                </li>
+
+                <li class="item">
+                    <div class="item__name">
+                        <a href="./product.html">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                            상품관리</a>
+                    </div>
+                </li>
+
+                <li class="item">
+                    <div class="item__name">
+                        <a href="./review.html">
+                            <span class="material-symbols-outlined">rate_review</span>
+                            리뷰관리</a>
+                    </div>
+                </li>
+
+                <li class="item">
+                    <div class="item__name">
+                        <a href="./member.html">
+                            <span class="material-symbols-outlined">groups</span>
+                            회원관리</a>
+                    </div>
+                </li>
+
+                <li class="item">
+                    <div class="item__name">
+                        <a href="./notification.html">
+                            <span class="material-symbols-outlined">notifications</span>
+                            알림관리</a>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </header>
+
+
+    <section id="admin_notification">
+        <div class="inner">
+            <div class="title">
+                <h2>알림관리</h2>
+                <button>
+                    <a href="./notification02.html">알림등록</a>
+                </button>
+            </div>
+
+            <div class="box01">
+                <ul>
+                    <li>
+                        전체알림 <span>5</span>건
+                    </li>
+                    <li>
+                        진행중인 알림 <span>2</span>건
+                    </li>
+                    <li>
+                        중지된 알림 <span>3</span>건
+                    </li>
+                </ul>
+            </div>
+
+            <div class="box02">
+                <div class="status">
+                    <span>알림상태</span>
+                    <div class="buttons">
+                        <button>진행중</button>
+                        <button>중지</button>
+                    </div>
+                </div>
+                <div class="sort">
+                    <span>발송형식</span>
+                    <div class="buttons">
+                        <button>자동발송</button>
+                        <button>수동발송</button>
+                    </div>
+                </div>
+                <div class="search">
+                    <span>검색</span>
+                    <input type="text" placeholder="알림명 검색">
+                    <div class="buttons">
+                        <button>검색</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box03">
+                <div class="left">
+                    <span class="margin">검색결과 <span class="bold">5</span>건</span>
+                    <button>선택 전체삭제</button>
+                    <button>선택삭제</button>
+                </div>
+
+                <div class="right">
+                    <select name="howmany">
+                        <option value="10개씩 보기">10개씩 보기</option>
+                        <option value="30개씩 보기">30개씩 보기</option>
+                        <option value="50개씩 보기">50개씩 보기</option>
+                        <option value="100개씩 보기">100개씩 보기</option>
+                    </select>
+
+                    <button>
+                        <span class="material-symbols-outlined">description</span>
+                        <span>엑셀 다운로드</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="box04">
+                <table class="product-table">
+                    <caption class="hidden">알림관리</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <input type="checkbox" checked>
+                            </th>
+                            <th scope="col">번호</th>
+                            <th scope="col">상태</th>
+                            <th scope="col">알림명</th>
+                            <th scope="col">발송형식</th>
+                            <th scope="col">발송시점</th>
+                            <th scope="col">등록일</th>
+                            <th scope="col">알림중지</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="checkbox">
+                            </td>
+                            <td>05</td>
+                            <td>진행중</td>
+                            <td>결제 완료 알림</td>
+                            <td>자동발송</td>
+                            <td>리뷰 답변 완료시점</td>
+                            <td>2023. 03. 01</td>
+                            <td>
+                                <button>중지</button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <input type="checkbox">
+                            </td>
+                            <td>04</td>
+                            <td>진행중</td>
+                            <td>결제 완료 알림</td>
+                            <td>자동발송</td>
+                            <td>결제완료 완료시점</td>
+                            <td>2023. 03. 01</td>
+                            <td>
+                                <button>중지</button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <input type="checkbox">
+                            </td>
+                            <td>03</td>
+                            <td>중지</td>
+                            <td>결제 완료 알림</td>
+                            <td>수동발송</td>
+                            <td>택배발송 시점</td>
+                            <td>2023. 03. 01</td>
+                            <td>2023. 02. 07</td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <input type="checkbox">
+                            </td>
+                            <td>02</td>
+                            <td>진행중</td>
+                            <td>결제 완료 알림</td>
+                            <td>수동발송</td>
+                            <td>로그인이력 6개월 유지 시점</td>
+                            <td>2023. 03. 01</td>
+                            <td>
+                                <button>중지</button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <input type="checkbox">
+                            </td>
+                            <td>01</td>
+                            <td>진행중</td>
+                            <td>결제 완료 알림</td>
+                            <td>자동발송</td>
+                            <td>택배사 발송완료 시점</td>
+                            <td>2023. 03. 01</td>
+                            <td>
+                                <button>중지</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <a href="#" class="prev">
+                    <span class="material-symbols-outlined">
+                        chevron_left
+                    </span>
+                </a>
+
+                <p class="numbers">
+                    <a href="#">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">
+                        <span class="bold">4</span>
+                    </a>
+                    <a href="#">5</a>
+                </p>
+
+                <a href="#" class="next">
+                    <span class="material-symbols-outlined">
+                        chevron_right
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+</body>
+
+</html>

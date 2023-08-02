@@ -113,7 +113,7 @@
         </div>
     </header>
 
-    <form method="post" action="/login">
+    <form action="signIn" method="post">
     <section id="login">
         <div class="inner box-shadow">
             <div class="login__title">
@@ -121,17 +121,19 @@
             </div>
 
             <div class="login__input">
+                <div class="input__id">
                 <label for="id">
                     <p>이메일주소(ID)</p>
-                    <input type="textbox" name="id" placeholder="이메일 주소 입력" id="id">
-                    <p class="wrong__pw" id="emailChk" name="emailChk"></p>
+                    <input type="textbox" name="email" placeholder="이메일 주소 입력" id="id">
+                    <p class="wrong__id" th:text="${fail2Message}"></p>
                 </label>
+                </div>
 
                 <div class="input__pw">
                     <label for="pw">
                         <p>비밀번호</p>
-                        <input type="textbox" name="pw" placeholder="영문, 숫자, 특수문자 (8자-20자 이내)" id="pw">
-                        <p class="wrong__pw"id="idPwdChk" name="idPwdChk"></p>
+                        <input type="password" name="password" placeholder="영문, 숫자, 특수문자 (8자-20자 이내)" id="pw">
+                        <p class="wrong__pw" th:text="${failMessage}"></p>
                     </label>
 
                 </div>
@@ -140,7 +142,7 @@
 
             <div class="login__button">
                 <div class="inner">
-                    <button type="submit" id="loginBtn" >로그인</button>
+                    <button type="submit">로그인</button>
                 </div>
             </div>
 

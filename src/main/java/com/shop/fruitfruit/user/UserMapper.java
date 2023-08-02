@@ -13,8 +13,10 @@ public interface UserMapper {
 
     void insertUser(HashMap<String, Object> requestData);
 
+    HashMap<String, Object> loginChk(HashMap<String, Object> requestData);
+
     //쿼리에 넘겨줄 값 서비스로부터 전달 받음
-    String emailChk(HashMap<String,Object> requestData);
+    HashMap<String,Object> emailChk(HashMap<String,Object> requestData);
 
     String nicknameChk(HashMap<String,Object> requestData);
 }

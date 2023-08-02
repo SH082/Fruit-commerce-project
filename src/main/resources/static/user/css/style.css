@@ -237,6 +237,11 @@
   font: normal 11px/1 "Nanum Gothic";
   margin-top: 7px;
 }
+#login .inner .login__input .input__id .wrong__id {
+  color: red;
+  font: normal 11px/1 "Nanum Gothic";
+  margin-top: 7px;
+}
 #login .inner .login__button {
   margin-top: 50px;
 }
