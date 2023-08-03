@@ -1,0 +1,157 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shop.fruitfruit.admin.AdminMapper">
+
+    <insert id="insertProduct" parameterType="java.util.Map">
+        INSERT INTO product (category_id, name, price, rate, stock_quantity, content)
+        VALUES (#{sort}, #{productName}, #{price}, #{discount}, #{stock}, #{description})
+    </insert>
+
+    <insert id="insertPhoto" parameterType="java.util.Map">
+        INSERT INTO product_image (product_id, origin_name, file_name, file_size)
+        VALUES (
+        <choose>
+            <when test="productName != null">
+                (SELECT id FROM product WHERE name = #{productName})
+            </when>
+            <otherwise>
+                #{product_id}
+            </otherwise>
+        </choose>,
+        #{originName}, #{firebaseUrl}, #{fileSize}
+        )
+    </insert>
+
+    <select id="countProducts" resultType="int">
+
+        SELECT COUNT(*) AS total_count
+        FROM product product
+        JOIN category category ON product.category_id = category.id
+        <where>
+            <if test="selectedStatus != ''">
+                AND product.status = #{selectedStatus}
+            </if>
+            <if test="selectedCategory != ''">
+                AND category_name = #{selectedCategory}
+            </if>
+            <if test="searchKeyword != ''">
+                AND product.name LIKE CONCAT('%', #{searchKeyword}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectProductList" resultType="java.util.Map">
+
+
+        SELECT
+        product.id,
+        CASE product.status
+        WHEN 1 THEN 'sale'
+        WHEN 2 THEN 'stop sale'
+        WHEN 3 THEN 'sold out'
+        WHEN 4 THEN 'deleted'
+        END AS status,
+        product.name,
+        product.price,
+        product.rate,
+        product.created_at,
+        product.updated_at,
+        category.category_name
+        FROM product product
+        JOIN category category
+        ON product.category_id = category.id
+
+        <where>
+            <if test="selectedStatus != ''">
+                product.status = #{selectedStatus}
+            </if>
+            <if test="selectedCategory != ''">
+                AND category_name = #{selectedCategory}
+            </if>
+            <if test="searchKeyword != ''">
+                AND product.name LIKE CONCAT('%', #{searchKeyword}, '%')
+            </if>
+
+        </where>
+        <if test="selectedTab != ''">
+            LIMIT #{selectedTab}
+        </if>
+        ORDER BY product.id DESC
+    </select>
+
+    <select id="selectProductListAll" resultType="java.util.Map">
+
+        SELECT
+            product.id,
+            CASE product.status
+                WHEN 1 THEN 'sale'
+                WHEN 2 THEN 'stop sale'
+                WHEN 3 THEN 'sold out'
+                WHEN 4 THEN 'deleted'
+                END AS status,
+            product.name,
+            product.price,
+            product.rate,
+            product.created_at,
+            product.updated_at,
+            category.category_name
+        FROM product product
+                 JOIN category category
+                      ON product.category_id = category.id
+        where product.status = 1 or product.status = 2 or product.status = 3
+        ORDER BY product.id DESC;
+
+    </select>
+
+    <select id="countProductAll" resultType="java.util.Map">
+        SELECT
+            COUNT(*) AS count
+        FROM product product
+            JOIN category category ON product.category_id = category.id
+        WHERE product.status = 1 OR product.status = 2 OR product.status = 3
+    </select>
+
+
+    <update id="saleStopList" parameterType="java.util.Map">
+        UPDATE product
+        SET status = 2
+        WHERE id IN
+        <foreach collection="selectedIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="saleStop" parameterType="java.util.Map">
+        UPDATE product
+        SET status = 2
+        WHERE id = #{selectedIds3}
+
+    </update>
+
+    <update id="productDelete" parameterType="java.util.Map">
+        UPDATE product
+        SET status = 4
+        WHERE id IN
+        <foreach collection="selectedIds2" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="countStatus">
+        SELECT
+            SUM(CASE WHEN status IN (1, 2, 3) THEN 1 ELSE 0 END) AS total_count,
+            SUM(CASE WHEN status = 1 THEN 1 ELSE 0 END) AS status_1_count,
+            SUM(CASE WHEN status = 2 THEN 1 ELSE 0 END) AS status_2_count,
+            SUM(CASE WHEN status = 3 THEN 1 ELSE 0 END) AS status_3_count
+        FROM
+            product
+
+    </select>
+
+    <select id="getProductInfo" resultType="String">
+        select * from product where id=#{id}
+
+    </select>
+
+</mapper>

@@ -35,7 +35,7 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../admin/css/style.css">
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
@@ -49,7 +49,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 
-    <script defer src="./js/main.js"></script>
+    <script defer src="../admin/js/main.js"></script>
+    <th:block th:insert="~{includes/library}"></th:block>
+    <th:block th:insert="~{includes/scripts}"></th:block>
 </head>
 
 <body>
@@ -58,7 +60,7 @@
     <header id="admin_product_header">
         <div class="inner">
     
-            <a href="../admin.html" class="logo">
+            <a href="admin" class="logo">
                 <img src="./img/푸릇푸릇 로고.png" alt="logo" />
             </a>
     
@@ -128,16 +130,16 @@
             <div class="box01">
                 <ul>
                     <li>
-                        전체상품 <span>1</span>건
+                        전체상품 <span th:text="${count.total_count}"></span>건
                     </li>
                     <li>
-                        판매중 <span>3</span>건
+                        판매중 <span th:text="${count.status_1_count}"></span>건
                     </li>
                     <li>
-                        판매중지 <span>1</span>건
+                        판매중지 <span th:text="${count.status_2_count}"></span>건
                     </li>
                     <li>
-                        품절 <span>1</span>건
+                        품절 <span th:text="${count.status_3_count}"></span>건
                     </li>
                 </ul>
             </div>
@@ -146,42 +148,42 @@
                 <div class="status">
                     <span>게시상태</span>
                     <div class="buttons">
-                        <button>판매중</button>
-                        <button>판매중지</button>
-                        <button>품절</button>
+                        <button class="status-btn" value="1">판매중</button>
+                        <button class="status-btn" value="2">판매중지</button>
+                        <button class="status-btn" value="3">품절</button>
                     </div>
                 </div>
                 <div class="sort">
                     <span>분류</span>
                     <div class="buttons">
-                        <button>봄과일</button>
-                        <button>여름과일</button>
-                        <button>가을과일</button>
-                        <button>겨울과일</button>
+                        <button class="category-btn" value="Spring">봄과일</button>
+                        <button class="category-btn" value="Summer">여름과일</button>
+                        <button class="category-btn" value="Fall">가을과일</button>
+                        <button class="category-btn" value="Winter">겨울과일</button>
                     </div>
                 </div>
                 <div class="search">
                     <span>검색</span>
-                    <input type="text" placeholder="상품명 검색">
+                    <input type="text" placeholder="상품명 검색" id="searchKeyword">
                     <div class="buttons">
-                        <button>검색</button>
+                        <button id="searchBtn">검색</button>
                     </div>
                 </div>
             </div>
 
             <div class="box03">
                 <div class="left">
-                    <span class="margin">검색결과 <span class="bold">5</span>건</span>
-                    <button>선택 판매중지</button>
-                    <button>선택삭제</button>
+                    <span class="margin">검색결과 <span class="bold" id=search_result th:text="${search_result.count}"></span>건</span>
+                    <button id="stop_sale">선택 판매중지</button>
+                    <button id="product_delete">선택삭제</button>
                 </div>
 
                 <div class="right">
-                    <select name="howmany">
-                        <option value="10개씩 보기">10개씩 보기</option>
-                        <option value="30개씩 보기">30개씩 보기</option>
-                        <option value="50개씩 보기">50개씩 보기</option>
-                        <option value="100개씩 보기">100개씩 보기</option>
+                    <select name="howmany" id="howmany">
+                        <option value="10개씩 보기" data-tab="10">10개씩 보기</option>
+                        <option value="30개씩 보기" data-tab="30">30개씩 보기</option>
+                        <option value="50개씩 보기" data-tab="50">50개씩 보기</option>
+                        <option value="100개씩 보기" data-tab="100">100개씩 보기</option>
                     </select>
 
                     <button>
@@ -195,132 +197,49 @@
                 <table class="product-table">
                     <caption class="hidden">상품관리</caption>
                     <thead>
-                        <tr>
-                            <th scope="col">
-                                <input type="checkbox" checked>
-                            </th>
-                            <th scope="col">번호</th>
-                            <th scope="col">상태</th>
-                            <th scope="col">분류</th>
-                            <th scope="col">상품명</th>
-                            <th scope="col">상품금액</th>
-                            <th scope="col">할인율</th>
-                            <th scope="col">찜 수</th>
-                            <th scope="col">결제횟수</th>
-                            <th scope="col">리뷰수</th>
-                            <th scope="col">등록일</th>
-                            <th scope="col">상품수정</th>
-                            <th scope="col">판매중지</th>
-                        </tr>
+                    <tr>
+                        <th scope="col">
+                            <input type="checkbox" checked>
+                        </th>
+                        <th scope="col">번호</th>
+                        <th scope="col">상태</th>
+                        <th scope="col">분류</th>
+                        <th scope="col">상품명</th>
+                        <th scope="col">상품금액</th>
+                        <th scope="col">할인율</th>
+                        <th scope="col">찜 수</th>
+                        <th scope="col">결제횟수</th>
+                        <th scope="col">리뷰수</th>
+                        <th scope="col">등록일</th>
+                        <th scope="col">상품수정</th>
+                        <th scope="col">판매중지</th>
+                    </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <input type="checkbox">
-                            </td>
-                            <td>05</td>
-                            <td>판매중</td>
-                            <td>겨울과일</td>
-                            <td>맛있는 아삭아삭 충주 산지직송 사...</td>
-                            <td>18,900원</td>
-                            <td>10%</td>
-                            <td>269</td>
-                            <td>135</td>
-                            <td>23</td>
-                            <td>2023. 07. 21</td>
-                            <td>
-                                <button>수정</button>
-                            </td>
-                            <td>
-                                <button>중지</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <input type="checkbox">
-                            </td>
-                            <td>04</td>
-                            <td>판매중지</td>
-                            <td>겨울과일</td>
-                            <td>프리미엄 수입 석류 대과</td>
-                            <td>8,900원</td>
-                            <td>-</td>
-                            <td>19</td>
-                            <td>2</td>
-                            <td>-</td>
-                            <td>2023. 06. 24</td>
-                            <td>
-                                <button>수정</button>
-                            </td>
-                            <td>2023. 06. 25</td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <input type="checkbox">
-                            </td>
-                            <td>03</td>
-                            <td>판매중</td>
-                            <td>겨울과일</td>
-                            <td>고흥유자 유자청용 유자</td>
-                            <td>18,900원</td>
-                            <td>5%</td>
-                            <td>3675</td>
-                            <td>2689</td>
-                            <td>328</td>
-                            <td>2023. 06. 13</td>
-                            <td>
-                                <button>수정</button>
-                            </td>
-                            <td>
-                                <button>중지</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <input type="checkbox">
-                            </td>
-                            <td>02</td>
-                            <td>판매중</td>
-                            <td>봄과일</td>
-                            <td>국내산 냉동 딸기 1kg</td>
-                            <td>15,900원</td>
-                            <td>3%</td>
-                            <td>569</td>
-                            <td>102</td>
-                            <td>13</td>
-                            <td>2023. 06. 08</td>
-                            <td>
-                                <button>수정</button>
-                            </td>
-                            <td>
-                                <button>중지</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <input type="checkbox">
-                            </td>
-                            <td>01</td>
-                            <td>품절</td>
-                            <td>봄과일</td>
-                            <td>하동직송 청매실 대 5kg</td>
-                            <td>17,900원</td>
-                            <td>-</td>
-                            <td>27769</td>
-                            <td>3405</td>
-                            <td>1537</td>
-                            <td>2023. 06. 03</td>
-                            <td>
-                                <button>수정</button>
-                            </td>
-                            <td>
-                                -
-                            </td>
-                        </tr>
+                    <tbody id="product_list">
+                    <!-- 타임리프로 반복되는 부분은 여기에 추가될 예정입니다. -->
+                    <tr th:each="product : ${list}">
+                        <td>
+                            <input type="checkbox" id="product_status" th:value="${product.id}">
+                        </td>
+                        <td th:text="${product.id}"></td>
+                        <td th:text="${product.status}"></td>
+                        <td th:text="${product.category_name}"></td>
+                        <td th:text="${product.name}"></td>
+                        <td th:text="${product.price}"></td>
+                        <td th:text="${product.rate}"></td>
+                        <td>269</td>
+                        <td>135</td>
+                        <td>23</td>
+                        <td th:text="${product.created_at}"></td>
+                        <td>
+                            <button>수정</button>
+                        </td>
+                        <td>
+                            <!-- 상태가 'stop sale'일 때는 updated_at 데이터를 보여주고, 그렇지 않을 때는 중지 버튼을 보여줍니다. -->
+                            <span th:if="${product.status == 'stop sale'}" th:text="${product.updated_at}"></span>
+                            <button th:unless="${product.status == 'stop sale'}" id="stop" th:value="${product.id}">중지</button>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>

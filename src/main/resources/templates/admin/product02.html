@@ -116,76 +116,123 @@
     </header>
 
 
-    <section id="admin_product02">
-        <div class="inner">
-            <div class="title">
-                <h2>상품등록</h2>
+    <form action="/admin/product_insert" method="post" enctype="multipart/form-data">
+
+        <section id="admin_product02">
+            <div class="inner">
+                <div class="title">
+                    <h2>상품등록</h2>
+                </div>
+
+                <div class="admin_product02__wrap">
+                    <label for="productName" class="productName">
+                        <p> <span>*</span> 상품명</p>
+                        <input type="textbox" name="productName" placeholder="상품명을 입력해주세요." id="productName">
+                    </label>
+
+                    <label for="sort">
+                        <p> <span>*</span> 분류</p>
+                        <select name="sort">
+                            <p>분류</p>
+                            <option value="1">봄과일</option>
+                            <option value="2">여름과일</option>
+                            <option value="3">가을과일</option>
+                            <option value="4">겨울과일</option>
+                        </select>
+                    </label>
+
+                    <label for="price">
+                        <p> <span>*</span> 상품금액</p>
+                        <input type="textbox" name="price" placeholder="0" id="price">
+                        원
+                    </label>
+
+                    <label for="discount">
+                        <p> 상품할인율 </p>
+                        <input type="textbox" name="discount" value="0" id="discount">
+                        %
+                    </label>
+
+                    <label for="totalPrice" class="totalPrice">
+                        <p> 할인적용 후 금액 </p>
+                        <input type="textbox" name="totalPrice"  id="totalPrice">
+                        원
+                    </label>
+
+                    <label for="stock">
+                        <p> <span>*</span> 재고수량 </p>
+                        <input type="textbox" name="stock" placeholder="0" id="stock">
+                        원
+                    </label>
+
+                    <label for="productPicture" class="productPicture">
+                        <p> <span>*</span> 상품이미지 </p>
+                        <div>+ 추가</div>
+                        <input type="file" name="productPicture" id="productPicture" accept="image/*">
+                        <img id="previewImage" >
+                    </label>
+
+
+                    <label for="description" class="description">
+                        <p> <span>*</span> 상품 상세정보 </p>
+                        <input type="textarea" name="description" id="description">
+                    </label>
+
+                </div>
+
+                <div class="buttons">
+                    <button>취소하기</button>
+                    <button type="submit">등록하기</button>
+                </div>
             </div>
-
-            <div class="admin_product02__wrap">
-                <label for="productName" class="productName">
-                    <p> <span>*</span> 상품명</p>
-                    <input type="textbox" name="productName" value="상품명을 입력해주세요." id="productName">
-                </label>
-
-                <label for="sort">
-                    <p> <span>*</span> 분류</p>
-                    <select name="sort">
-                        <p>분류</p>
-                        <option value="봄과일">봄과일</option>
-                        <option value="여름과일">여름과일</option>
-                        <option value="가을과일">가을과일</option>
-                        <option value="겨울과일">겨울과일</option>
-                    </select>
-                </label>
-
-                <label for="price">
-                    <p> <span>*</span> 상품금액</p>
-                    <input type="textbox" name="price" value="0" id="price">
-                    원
-                </label>
-
-                <label for="discount">
-                    <p> 상품할인율 </p>
-                    <input type="textbox" name="discount" value="0" id="discount">
-                    %
-                </label>
-
-                <label for="totalPrice" class="totalPrice">
-                    <p> 할인적용 후 금액 </p>
-                    <input type="textbox" name="totalPrice" value="0" id="totalPrice">
-                    원
-                </label>
-
-                <label for="stock">
-                    <p> <span>*</span> 재고수량 </p>
-                    <input type="textbox" name="stock" value="0" id="stock">
-                    원
-                </label>
-
-                <label for="productPicture" class="productPicture">
-                    <p> <span>*</span> 상품이미지 </p>
-                    <div>+ 추가</div>
-                    <input type="file" name="productPicture" id="productPicture" accept="image/*">
-                    <img src="./img/이미지위치.png" alt="미리보기 이미지">
-                </label>
-
-
-                <label for="description" class="description">
-                    <p> <span>*</span> 상품 상세정보 </p>
-                    <input type="textbox" name="description" id="description">
-                </label>
-
-            </div>
-
-            <div class="buttons">
-                <button>취소하기</button>
-                <button>등록하기</button>
-            </div>
-        </div>
-    </section>
+        </section>
+    </form>
 
 
 </body>
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        selector: "#description",
+        plugins: "image",
+        toolbar: "image",
+        images_upload_url: "/upload-image",
+        images_upload_handler: function (blobInfo, success, failure) {
+            var formData = new FormData();
+            formData.append("file", blobInfo.blob());
+
+            fetch("/admin/product_insert", {
+                method: "POST",
+                body: formData,
+            })
+                .then((response) => response.text())
+                .then((imageUrl) => {
+                    success(imageUrl);
+                })
+                .catch((error) => {
+                    console.error("Error uploading image:", error);
+                    failure("Image upload failed");
+                });
+        },
+    });
+</script>
+<script>
+    // input 요소의 change 이벤트를 감지하여 이미지 미리보기 함수를 호출
+    document.getElementById('productPicture').addEventListener('change', previewImage);
+
+    function previewImage() {
+        const fileInput = document.getElementById('productPicture');
+        const previewImg = document.getElementById('previewImage');
+
+
+        // FileReader 객체를 사용하여 선택한 파일을 읽어옴
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            // 선택한 이미지를 미리보기 이미지로 설정
+            previewImg.src = event.target.result;
+        };
+        reader.readAsDataURL(fileInput.files[0]); // 파일을 data URL로 읽어옴
+    }
+</script>
 
 </html>

@@ -15,7 +15,7 @@ import java.io.IOException;
 @Slf4j
 public class FireBaseInit {
 
-    @Value("${firebase.firebaseApiKey}")
+    @Value("./firebaseApiKey.json")
     private String firebaseApiKey;
 
     @PostConstruct

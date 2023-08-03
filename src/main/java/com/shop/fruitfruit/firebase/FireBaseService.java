@@ -16,7 +16,7 @@ import java.io.InputStream;
 @Slf4j
 public class FireBaseService {
 
-    @Value("${firebase.bucket}")
+    @Value("fruitproject-f7cee.appspot.com")
     private String firebaseBucket;
 
     public String uploadFiles(MultipartFile file, String path, String fileName) throws IOException {

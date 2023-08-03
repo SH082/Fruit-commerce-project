@@ -1,50 +1,125 @@
 package com.shop.fruitfruit.admin;
 
+import com.shop.fruitfruit.firebase.FireBaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class AdminController {
 
     private final AdminService adminService;
-    @GetMapping("/admin")
-    public String adminMain(){
+    private final FireBaseService fireBaseService;
 
-        return "/admin";
+    @GetMapping("admin/favicon.ico")
+    @ResponseBody
+    void noFavicon() {
     }
 
-    @GetMapping("/admin/dashboard")
-    public String adminMainDash(){
+@GetMapping("/admin/{pageName}")
+public String login(@PathVariable String pageName) {
 
-        return "/admin/dashboard";
+
+    return "admin/" + pageName;
+}
+    @GetMapping("/admin/product")
+    public String count(Model model) {
+
+        HashMap<String,Object> count = adminService.countStatus();
+        List<HashMap<String, Object>> list = adminService.selectProductListAll();
+        HashMap<String,Object> search_result = adminService.countProductAll();
+
+        model.addAttribute("search_result", search_result);
+        model.addAttribute("count", count);
+        model.addAttribute("list", list);
+
+        System.out.println("카운트="+search_result);
+
+        return "admin/product";
     }
 
-    @GetMapping("/admin/banner")
-    public String adminBanner(){
+    @ResponseBody
+    @PostMapping("/admin/product")
+    public HashMap<String, Object> product(@RequestBody HashMap<String, Object> requestData, Model model) {
 
-        return "/admin/banner";
+
+
+        List<HashMap<String, Object>> data = adminService.selectProductList(requestData);
+        int count = adminService.countProducts(requestData);
+
+        HashMap<String,Object> data_count = new HashMap<>();
+
+        data_count.put("data",data);
+        data_count.put("count",count);
+
+        return data_count;
     }
 
-    @GetMapping("/admin/notification")
-    public String adminNotification(){
+    @PostMapping("/admin/product_insert")
+    public String product_insert(@RequestParam HashMap<String, Object> requestData,
+                                 @RequestParam("productPicture") MultipartFile file){
 
-        return "/admin/notification";
+
+
+        String path = "fruit"; // 원하는 이미지 저장 경로를 입력하세요 (예: "products")
+        String fileName = requestData.get("productName") + "_" + file.getOriginalFilename();
+        String imageUrl;
+        try {
+            imageUrl = fireBaseService.uploadFiles(file, path, fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "error";
+        }
+
+        // origin_name과 file_name에 이미지 정보 저장
+        String originName = fileName; // 로컬경로 대신 원래 파일 이름을 저장 (파일명 중복 방지)
+        String firebaseUrl = imageUrl; // Firebase에서 받아온 이미지 URL
+        String fileSize = String.valueOf(file.getSize());
+
+
+        // 여기서부터 데이터베이스에 저장하는 로직 작성
+        requestData.put("originName", originName);
+        requestData.put("firebaseUrl", firebaseUrl);
+        requestData.put("fileSize", fileSize);
+
+
+        adminService.insertProductAll(requestData);
+
+        return "redirect:../admin/product";
     }
-    @GetMapping("/admin/member")
-    public String adminMember(){
+    @ResponseBody
+    @PostMapping("/admin/product_status")
+    public int product_status(@RequestBody HashMap<String, Object> requestData) {
 
-        return "/admin/member";
+
+        if(requestData.get("selectedIds")!=null) {
+
+            adminService.saleStopList(requestData);
+            return 1;
+        }
+
+        if(requestData.get("selectedIds2")!=null) {
+
+            adminService.productDelete(requestData);
+            return 1;
+        }
+
+        if(requestData.get("selectedIds3")!=null) {
+
+
+            adminService.saleStop(requestData);
+            return 1;
+        }
+
+
+        return 0;
     }
-
 
 }

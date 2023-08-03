@@ -20,4 +20,12 @@ public class MainController {
         return "modal/alert";
     }
 
+    @GetMapping("/admin")
+    public String adminIndex() {
+
+
+        return "admin";
+    }
+
+
 }
