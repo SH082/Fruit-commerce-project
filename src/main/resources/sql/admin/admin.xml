@@ -33,7 +33,7 @@
                 AND product.status = #{selectedStatus}
             </if>
             <if test="selectedCategory != ''">
-                AND category_name = #{selectedCategory}
+                AND category_name= #{selectedCategory}
             </if>
             <if test="searchKeyword != ''">
                 AND product.name LIKE CONCAT('%', #{searchKeyword}, '%')
@@ -42,8 +42,6 @@
     </select>
 
     <select id="selectProductList" resultType="java.util.Map">
-
-
         SELECT
         product.id,
         CASE product.status
@@ -61,7 +59,6 @@
         FROM product product
         JOIN category category
         ON product.category_id = category.id
-
         <where>
             <if test="selectedStatus != ''">
                 product.status = #{selectedStatus}
@@ -72,12 +69,11 @@
             <if test="searchKeyword != ''">
                 AND product.name LIKE CONCAT('%', #{searchKeyword}, '%')
             </if>
-
         </where>
-        <if test="selectedTab != ''">
-            LIMIT #{selectedTab}
-        </if>
         ORDER BY product.id DESC
+        <if test="selectedTab != ''">
+            LIMIT #{selectedTab, javaType=int}
+        </if>
     </select>
 
     <select id="selectProductListAll" resultType="java.util.Map">

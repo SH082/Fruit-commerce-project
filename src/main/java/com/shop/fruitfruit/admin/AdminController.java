@@ -2,6 +2,8 @@ package com.shop.fruitfruit.admin;
 
 import com.shop.fruitfruit.firebase.FireBaseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,12 +26,13 @@ public class AdminController {
     void noFavicon() {
     }
 
-@GetMapping("/admin/{pageName}")
-public String login(@PathVariable String pageName) {
+    @GetMapping("/admin/{pageName}")
+    public String login(@PathVariable String pageName) {
 
 
     return "admin/" + pageName;
-}
+    }
+
     @GetMapping("/admin/product")
     public String count(Model model) {
 
@@ -95,7 +99,7 @@ public String login(@PathVariable String pageName) {
         return "redirect:../admin/product";
     }
     @ResponseBody
-    @PostMapping("/admin/product_status")
+    @PostMapping("admin/product_status")
     public int product_status(@RequestBody HashMap<String, Object> requestData) {
 
 
@@ -122,4 +126,16 @@ public String login(@PathVariable String pageName) {
         return 0;
     }
 
+    @PostMapping("/upload_image_to_firebase")
+    public ResponseEntity<Map<String, String>> uploadImageToFirebase(@RequestParam("file") MultipartFile file) {
+        Map<String, String> response = new HashMap<>();
+        try {
+            String imageUrl = fireBaseService.uploadFiles(file, "tinymce_images", file.getOriginalFilename());
+            response.put("location", imageUrl); // 이미지 URL을 "location" 키로 반환합니다.
+            return ResponseEntity.ok(response);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

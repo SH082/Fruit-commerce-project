@@ -29,16 +29,10 @@ $(document).on('click', '#stop_sale', () => {
 
 });
 
-$(document).on('click', '#stop', () => {
+$(document).on('click', '#stop', (event) => {
 
 
     const selectedIds3 = $(event.target).val();
-
-
-
-
-
-
 
     axios({
         method: 'post',
@@ -60,9 +54,6 @@ $(document).on('click', '#stop', () => {
     });
 
 });
-
-
-
 
 
 $(document).on('click', '#product_delete', () => {

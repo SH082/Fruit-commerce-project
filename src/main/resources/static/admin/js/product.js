@@ -1,7 +1,14 @@
 let selectedStatus = '';
 let selectedCategory = '';
 let searchKeyword = ''; // 전역 변수로 선언
-let selectedTab = '';
+let selectedTab = '10';
+
+
+
+$(document).on('change', '#howmany', () => {
+    selectedTab = parseInt($('#howmany option:selected').val());
+    fetchData();
+});
 
 $(document).on('click', '.status-btn', () => {
     selectedStatus = $(event.target).val();
@@ -18,10 +25,7 @@ $(document).on('click', '#searchBtn', () => {
     fetchData(); // fetchData 함수 호출 (매개변수 없음)
 });
 
-$(document).on('change', '#howmany', () => {
-    selectedTab = $('#howmany option:selected').data('tab');
-    fetchData();
-});
+
 
 function fetchData() {
     axios({
@@ -48,9 +52,9 @@ function fetchData() {
             const html = `
 
 
-
-
-
+        
+               
+                       
         <tr>
             <td>
                 <input type="checkbox" id="product_status" value="${response.data.data[i].id}">
@@ -72,9 +76,9 @@ function fetchData() {
                 ${response.data.data[i].status == 'stop sale' ? response.data.data[i].updated_at : `<button id="stop" value="${response.data.data[i].id}">중지</button>`}
             </td>
         </tr>
-
-
-
+        
+                
+            
     `;
             $("#product_list").append(html);
 

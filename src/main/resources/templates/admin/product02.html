@@ -50,6 +50,11 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 
     <script defer src="./js/main.js"></script>
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>
+
+    <th:block th:insert="~{includes/library}"></th:block>
+    <th:block th:insert="~{includes/admin_style}"></th:block>
+    <th:block th:insert="~{includes/admin_scripts}"></th:block>
 </head>
 
 <body>
@@ -189,49 +194,5 @@
 
 
 </body>
-<script src="https://cdn.tiny.cloud/1/g04izgx8rtzgzhehcyk6qu3qautn4zbvv92wgl545xvi0oqw/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-<script>
-    tinymce.init({
-        selector: "#description",
-        plugins: "image",
-        toolbar: "image",
-        images_upload_url: "/upload-image",
-        images_upload_handler: function (blobInfo, success, failure) {
-            var formData = new FormData();
-            formData.append("file", blobInfo.blob());
-
-            fetch("/admin/product_insert", {
-                method: "POST",
-                body: formData,
-            })
-                .then((response) => response.text())
-                .then((imageUrl) => {
-                    success(imageUrl);
-                })
-                .catch((error) => {
-                    console.error("Error uploading image:", error);
-                    failure("Image upload failed");
-                });
-        },
-    });
-</script>
-<script>
-    // input 요소의 change 이벤트를 감지하여 이미지 미리보기 함수를 호출
-    document.getElementById('productPicture').addEventListener('change', previewImage);
-
-    function previewImage() {
-        const fileInput = document.getElementById('productPicture');
-        const previewImg = document.getElementById('previewImage');
-
-
-        // FileReader 객체를 사용하여 선택한 파일을 읽어옴
-        const reader = new FileReader();
-        reader.onload = function (event) {
-            // 선택한 이미지를 미리보기 이미지로 설정
-            previewImg.src = event.target.result;
-        };
-        reader.readAsDataURL(fileInput.files[0]); // 파일을 data URL로 읽어옴
-    }
-</script>
 
 </html>
